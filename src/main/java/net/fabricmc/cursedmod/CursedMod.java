@@ -1,4 +1,4 @@
-package net.fabricmc.example;
+package net.fabricmc.cursedmod;
 
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.sound.SoundEvent;
@@ -8,7 +8,7 @@ import net.minecraft.util.registry.Registry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ExampleMod implements ModInitializer {
+public class CursedMod implements ModInitializer {
 	// This logger is used to write text to the console and the log file.
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
@@ -22,7 +22,7 @@ public class ExampleMod implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 
-		LOGGER.info("ATTENTION CA VA CRASH !!! (cursedmod est chargé)");
-		Registry.register(Registry.SOUND_EVENT, ExampleMod.MY_SOUND_ID, MY_SOUND_EVENT);
+		LOGGER.info("ATTENTION CA VA sssCRASH !!! (cursedmod est chargé)");
+		Registry.register(Registry.SOUND_EVENT, CursedMod.MY_SOUND_ID, MY_SOUND_EVENT);
 	}
 }
