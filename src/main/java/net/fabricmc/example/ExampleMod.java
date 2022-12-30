@@ -1,7 +1,9 @@
 package net.fabricmc.example;
 
 import net.fabricmc.api.ModInitializer;
-import net.minecraft.registry.Registry; // j'ai ajouté ça
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
