@@ -1,10 +1,18 @@
 package net.fabricmc.cursedmod;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.util.InputUtil;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
+import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,5 +32,18 @@ public class CursedMod implements ModInitializer {
 
 		LOGGER.info("ATTENTION CA VA sssCRASH !!! (cursedmod est chargé)");
 		Registry.register(Registry.SOUND_EVENT, CursedMod.MY_SOUND_ID, MY_SOUND_EVENT);
+		KeyBinding keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+				"key.examplemod.spook", // The translation key of the keybinding's name
+				InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
+				GLFW.GLFW_KEY_R, // The keycode of the key
+				"category.examplemod.test" // The translation key of the keybinding's category.
+		));
+		ClientTickEvents.END_CLIENT_TICK.register(client -> {
+			while (keyBinding.wasPressed()) {
+				client.player.sendMessage(Text.of("C'est la big mouche qui te pique !"), true);
+				// play a sound at the player's position
+				client.player.playSound(MY_SOUND_EVENT, SoundCategory.PLAYERS, 1.0f, 1.0f);
+			}
+		});
 	}
 }
