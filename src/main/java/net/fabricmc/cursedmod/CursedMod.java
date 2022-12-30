@@ -20,8 +20,9 @@ public class CursedMod implements ModInitializer {
 	// This logger is used to write text to the console and the log file.
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
-	public static final Logger LOGGER = LoggerFactory.getLogger("cursedmod");
-	public static final Identifier MY_SOUND_ID = new Identifier("cursedmod:mouche");
+	public static final String MOD_ID = "cursedmod";
+	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+	public static final Identifier MY_SOUND_ID = new Identifier(MOD_ID+":mouche");
 	public static SoundEvent MY_SOUND_EVENT = new SoundEvent(MY_SOUND_ID);
 
 	@Override
@@ -30,13 +31,13 @@ public class CursedMod implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 
-		LOGGER.info("ATTENTION CA VA sssCRASH !!! (cursedmod est chargé)");
+		LOGGER.info("ATTENTION CA VA sssCRASH !!! ("+ MOD_ID +" est chargé)");
 		Registry.register(Registry.SOUND_EVENT, CursedMod.MY_SOUND_ID, MY_SOUND_EVENT);
 		KeyBinding keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-				"key.examplemod.spook", // The translation key of the keybinding's name
+				"key.cursedmod.spook", // The translation key of the keybinding's name
 				InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
 				GLFW.GLFW_KEY_R, // The keycode of the key
-				"category.examplemod.test" // The translation key of the keybinding's category.
+				"category.cursedmod.test" // The translation key of the keybinding's category.
 		));
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			while (keyBinding.wasPressed()) {
