@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "cursedmod",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "cursedmod",
+  "description": "BZZBZZ",
   "authors": [
-    "Me!"
+    "LICHAR"
   ],
   "contact": {
     "homepage": "https://fabricmc.net/",
