@@ -1,12 +1,11 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "net.fabricmc.cursedmod.mixin",
+  "package": "xhookman.cursedmod.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
   ],
   "client": [
-    "CursedModMixin"
   ],
   "injectors": {
     "defaultRequire": 1

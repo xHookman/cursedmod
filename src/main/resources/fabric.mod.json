@@ -2,37 +2,27 @@
   "schemaVersion": 1,
   "id": "cursedmod",
   "version": "${version}",
-
-  "name": "cursedmod",
-  "description": "BZZBZZ",
-  "authors": [
-    "LICHAR"
-  ],
-  "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
-  },
-
-  "license": "CC0-1.0",
+  "name": "Cursedmod",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
   "icon": "assets/cursedmod/icon.png",
-
   "environment": "*",
   "entrypoints": {
+    "client": [
+      "xhookman.cursedmod.client.CursedmodClient"
+    ],
     "main": [
-      "net.fabricmc.cursedmod.CursedMod"
+      "xhookman.cursedmod.Cursedmod"
     ]
   },
   "mixins": [
     "cursedmod.mixins.json"
   ],
-
   "depends": {
-    "fabricloader": ">=0.14.11",
-    "fabric-api": "*",
-    "minecraft": "~1.19.2",
-    "java": ">=17"
-  },
-  "suggests": {
-    "another-mod": "*"
+    "fabricloader": ">=0.14.12",
+    "fabric": "*",
+    "minecraft": "1.19.2"
   }
 }
