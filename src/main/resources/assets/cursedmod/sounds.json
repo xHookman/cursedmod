@@ -3,5 +3,10 @@
     "sounds": [
       "cursedmod:mouche"
     ]
+  },
+  "salope": {
+    "sounds": [
+      "cursedmod:salope"
+    ]
   }
 }
