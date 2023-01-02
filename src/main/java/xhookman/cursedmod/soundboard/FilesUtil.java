@@ -10,8 +10,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
-import static xhookman.cursedmod.client.CursedmodClient.LOGGER;
-
 public class FilesUtil {
     private static File soundboardDir;
     private static File tmpFile;
@@ -23,7 +21,15 @@ public class FilesUtil {
             throw new RuntimeException(e);
         }
     }
-
+    
+    public static void checkFilesName(File dir){
+        for (File file : dir.listFiles()) {
+            String soundFileName = file.getName().split(".ogg")[0];
+            if(!soundFileName.matches("[a-z0-9_]")){
+                file.renameTo(new File(dir, soundFileName.replaceAll("[^a-z0-9_]+", "")+".ogg"));
+            }
+        }
+    }
     ;
     public static void createFiles(){
         soundboardDir = new File("mods/soundboard");
@@ -37,7 +43,7 @@ public class FilesUtil {
 
     public static void copyFile(File fileToCopy) {
         // Open the jar file for reading
-        File jarFile = new File("mods/cursedmod-1.0-SNAPSHOT.jar");
+        File jarFile = new File("mods/"+ getJarName());
         try (ZipInputStream in = new ZipInputStream(new FileInputStream(jarFile))) {
             // Create a temporary jar file
             try (ZipOutputStream out = new ZipOutputStream(new FileOutputStream(tmpFile))) {
@@ -54,7 +60,10 @@ public class FilesUtil {
                 }
                 // Add the file to the jar file
                 try (FileInputStream fileIn = new FileInputStream(fileToCopy)) {
-                    out.putNextEntry(new ZipEntry("assets/cursedmod/sounds/" + fileToCopy.getName()));
+                    File f = new File("assets/cursedmod/sounds");
+                    if(f.exists())
+                        f.delete();
+                    out.putNextEntry(new ZipEntry(f.getPath() + "/" + fileToCopy.getName()));
                     byte[] fileBuffer = new byte[1024];
                     int fileCount;
                     while ((fileCount = fileIn.read(fileBuffer)) > 0) {
@@ -62,7 +71,6 @@ public class FilesUtil {
                     }
                 }
             }
-            LOGGER.info(" !!!!!!!!!!!!!!!!!!!!!!!!! File copied : " + tmpFile.getPath());
             // Replace the original jar file with the modified jar file
             Files.copy(tmpFile.toPath(), jarFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
@@ -70,9 +78,9 @@ public class FilesUtil {
         }
     }
 
-    public static void generateSoundsJson(File folder) { // Ne fonctionne pas quand le json existe déjà
+    public static void generateSoundsJson(File folder) {
         // Open the jar file for reading
-        File jarFile = new File("mods/cursedmod-1.0-SNAPSHOT.jar");
+        File jarFile = new File("mods/" + getJarName());
         try (ZipInputStream in = new ZipInputStream(new FileInputStream(jarFile))) {
             // Create a temporary jar file
 
@@ -88,7 +96,10 @@ public class FilesUtil {
                     }
                     entry = in.getNextEntry();
                 }
-                ZipEntry newEntry = new ZipEntry("assets/cursedmod/sounds.json");
+                File f = new File("assets/cursedmod/sounds.json");
+                if(f.exists())
+                    f.delete();
+                ZipEntry newEntry = new ZipEntry(f.getPath());
                 String content = "{";
 
                 for(int i=0; i<folder.listFiles().length; i++){
