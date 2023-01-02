@@ -7,10 +7,11 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
+import java.io.File;
 import java.util.Hashtable;
 
-import static xhookman.cursedmod.Cursedmod.MOD_ID;
 import static net.fabricmc.fabric.impl.transfer.TransferApiImpl.LOGGER;
+import static xhookman.cursedmod.Cursedmod.MOD_ID;
 
 public class SoundboardServer {
     private static final Hashtable<Identifier, SoundEvent> sounds = new Hashtable<>();
@@ -24,15 +25,20 @@ public class SoundboardServer {
 
     public SoundboardServer(){
         LOGGER.info("SoundboardServer constructor");
-        //check if the object is already initialized
-            Identifier idMouche = new Identifier(MOD_ID + ":mouche");
-            sounds.put(idMouche, new SoundEvent(idMouche));
-            Identifier idSalope = new Identifier(MOD_ID + ":salope");
-            sounds.put(idSalope, new SoundEvent(idSalope));
+          FilesUtil.createFiles();
+        File dir = FilesUtil.getDir();
+        FilesUtil.generateSoundsJson(dir);
 
-            for (Identifier soundId : sounds.keySet()) {
-                Registry.register(Registry.SOUND_EVENT, soundId, sounds.get(soundId));
+        for(int i=0; i<dir.listFiles().length; i++){
+            File soundFile = dir.listFiles()[i];
+            if(soundFile.getName().endsWith(".ogg")){
+                FilesUtil.copyFile(soundFile);
+                Identifier soundId = new Identifier(MOD_ID, soundFile.getName().split(".ogg")[0]);
+                SoundEvent soundEvent = new SoundEvent(soundId);
+                sounds.put(soundId, soundEvent);
+                Registry.register(Registry.SOUND_EVENT, soundId, soundEvent);
             }
+        }
     }
 
     public void playSoundWhenKeyPressed(){

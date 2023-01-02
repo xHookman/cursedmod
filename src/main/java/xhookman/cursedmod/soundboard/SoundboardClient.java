@@ -15,10 +15,8 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.Hashtable;
 
-import static xhookman.cursedmod.Cursedmod.MOD_ID;
-
 public class SoundboardClient {
-    private final KeyBinding key0, key1;
+    private final KeyBinding key0, key1, keyR;
     PositionedSoundInstance sound;
 
     protected Hashtable<Identifier, SoundEvent> sounds;
@@ -36,11 +34,16 @@ public class SoundboardClient {
                 GLFW.GLFW_KEY_1, // The keycode of the key
                 "category.cursedmod.sound" // The translation key of the keybinding's category.
         ));
+        keyR = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.cursedmod.keyR", // The translation key of the keybinding's name
+                InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
+                GLFW.GLFW_KEY_R, // The keycode of the key
+                "category.cursedmod.sound" // The translation key of the keybinding's category.
+        ));
         sounds= SoundboardServer.getSoundHashtable();
     }
     private void playSound(Identifier soundId, MinecraftClient client){
         sound = PositionedSoundInstance.master(sounds.get(soundId), 1.0F);
-
         if (!client.getSoundManager().isPlaying(sound)) {
             client.getSoundManager().play(sound);
             PacketByteBuf buf = PacketByteBufs.create();
@@ -50,13 +53,21 @@ public class SoundboardClient {
             buf.release();
         }
     }
+
+    protected void playSound(Identifier soundId){
+        playSound(soundId, MinecraftClient.getInstance());
+    }
+
     public void playSoundWhenKeyPressed(){
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (key0.wasPressed()) {
-                playSound(new Identifier(MOD_ID+":mouche"), client);
+                playSound(sounds.keys().nextElement(), client);
             }
             while (key1.wasPressed()) {
-                playSound(new Identifier(MOD_ID+":salope"), client);
+                playSound(sounds.keys().nextElement(), client);
+            }
+            while (keyR.wasPressed()) {
+                MinecraftClient.getInstance().setScreenAndRender(new SoundboardGui(this));
             }
         });
     }
