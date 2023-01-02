@@ -29,7 +29,7 @@ public class CursedmodClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         LOGGER.info("ATTENTION CA VA CRASH !!! (" + MOD_ID + " est chargé)");
-        Registry.register(Registry.SOUND_EVENT, CursedmodClient.MY_SOUND_ID, MY_SOUND_EVENT);
+
         KeyBinding keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.cursedmod.spook", // The translation key of the keybinding's name
                 InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
