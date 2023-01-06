@@ -2,19 +2,16 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "WWW",
-    "WRW",
+    "WWW",
     "WWW"
   ],
   "key": {
     "W": {
-      "tag": "minecraft:coals"
-    },
-    "R": {
-      "item": "minecraft:redstone"
+      "item": "cursedmod:vjb"
     }
   },
   "result": {
-    "item": "cursedmod:vjb",
+    "item": "cursedmod:vjblock",
     "count": 1
   }
 }

@@ -1,12 +1,15 @@
 package xhookman.cursedmod;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.Enchantment;
@@ -27,10 +30,19 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.YOffset;
+import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.placementmodifier.CountPlacementModifier;
+import net.minecraft.world.gen.placementmodifier.HeightRangePlacementModifier;
+import net.minecraft.world.gen.placementmodifier.SquarePlacementModifier;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static net.fabricmc.fabric.impl.transfer.TransferApiImpl.LOGGER;
@@ -54,15 +66,48 @@ public class Cursedmod implements ModInitializer {
     //VJBlock
     public static final Block VJBLOCK = new Block(FabricBlockSettings.of(Material.METAL).strength(4.0f).requiresTool());
 
+    //VJB mineraie
+    public static final Block VJBORE = new Block(FabricBlockSettings.of(Material.STONE).strength(4.0f).requiresTool());
+
+    private static ConfiguredFeature<?, ?> OVERWORLD_VJBORE_CONFIGURED_FEATURE = new ConfiguredFeature
+            (Feature.ORE, new OreFeatureConfig(
+                    OreConfiguredFeatures.STONE_ORE_REPLACEABLES,
+                    VJBORE.getDefaultState(),
+                    9)); // vein size
+
+    public static PlacedFeature OVERWORLD_VJBORE_PLACED_FEATURE = new PlacedFeature(
+            RegistryEntry.of(OVERWORLD_VJBORE_CONFIGURED_FEATURE),
+            Arrays.asList(
+                    CountPlacementModifier.of(20), // number of veins per chunk
+                    SquarePlacementModifier.of(), // spreading horizontally
+                    HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(64))
+            )); // height
 
     @Override
     public void onInitialize() {
+
         //VJB peut etre brulé
-        FuelRegistry.INSTANCE.add(VJB, 1000);
+        FuelRegistry.INSTANCE.add(VJB, 200);
 
         //bloc VJB
         Registry.register(Registry.BLOCK, new Identifier("cursedmod", "vjblock"), VJBLOCK);
         Registry.register(Registry.ITEM, new Identifier("cursedmod", "vjblock"), new BlockItem(VJBLOCK, new FabricItemSettings().group(VjbGroupItem)));
+
+        FuelRegistry.INSTANCE.add(VJBLOCK, 2000);
+
+        //mineraie VJB
+        Registry.register(Registry.BLOCK, new Identifier("cursedmod", "vjbore"), VJBORE);
+        Registry.register(Registry.ITEM, new Identifier("cursedmod", "vjbore"), new BlockItem(VJBORE, new FabricItemSettings().group(VjbGroupItem)));
+
+        //gen vjbore
+        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,
+                new Identifier("cursedmod", "overworld_vjbore"), OVERWORLD_VJBORE_CONFIGURED_FEATURE);
+        Registry.register(BuiltinRegistries.PLACED_FEATURE, new Identifier("cursedmod", "overworld_vjbore"),
+                OVERWORLD_VJBORE_PLACED_FEATURE);
+
+        BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES,
+                RegistryKey.of(Registry.PLACED_FEATURE_KEY,
+                        new Identifier("cursedmod", "overworld_vjbore")));
 
 
         Registry.register(Registry.SOUND_EVENT, Cursedmod.MY_SOUND_ID, MY_SOUND_EVENT);

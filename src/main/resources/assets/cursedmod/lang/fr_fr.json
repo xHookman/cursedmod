@@ -3,5 +3,8 @@
 
   "itemGroup.cursedmod.vjbgroup": "cursed VJB",
 
+  "block.cursedmod.vjblock": "VJBLOCK",
+  "block.cursedmod.vjbore": "VJBORE",
+
   "enchantment.cursedmod.son": "Musique"
 }
