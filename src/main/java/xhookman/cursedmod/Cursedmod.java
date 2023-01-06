@@ -4,7 +4,10 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
+import net.minecraft.block.Block;
+import net.minecraft.block.Material;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
@@ -13,10 +16,7 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -51,13 +51,19 @@ public class Cursedmod implements ModInitializer {
             Registry.register(Registry.ITEM, new Identifier("cursedmod", "vjb"),
                     new CustomItem(new FabricItemSettings().maxCount(64).group(VjbGroupItem)));
 
-
+    //VJBlock
+    public static final Block VJBLOCK = new Block(FabricBlockSettings.of(Material.METAL).strength(4.0f).requiresTool());
 
 
     @Override
     public void onInitialize() {
         //VJB peut etre brulé
         FuelRegistry.INSTANCE.add(VJB, 1000);
+
+        //bloc VJB
+        Registry.register(Registry.BLOCK, new Identifier("cursedmod", "vjblock"), VJBLOCK);
+        Registry.register(Registry.ITEM, new Identifier("cursedmod", "vjblock"), new BlockItem(VJBLOCK, new FabricItemSettings().group(VjbGroupItem)));
+
 
         Registry.register(Registry.SOUND_EVENT, Cursedmod.MY_SOUND_ID, MY_SOUND_EVENT);
 
