@@ -6,8 +6,6 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-
-import java.io.File;
 import java.util.Hashtable;
 
 import static net.fabricmc.fabric.impl.transfer.TransferApiImpl.LOGGER;
@@ -24,20 +22,22 @@ public class SoundboardServer {
     }
 
     public SoundboardServer(){
-        //FilesUtil.createFiles();
-        File dir = new File("mods/soundboard/");
-        LOGGER.info("Il y a " + dir.listFiles().length + " fichiers dans le dossier soundboard");
-        for(int i=0; i<dir.listFiles().length; i++){ // net.minecraft.class_151: Non [a-z0-9/._-] character in path of location: cursedmod:put!e
-            File soundFile = dir.listFiles()[i];
-            String soundFileName = soundFile.getName().split(".ogg")[0];
-            LOGGER.info("soundFileName: " + soundFileName);
-            if(soundFile.getName().endsWith(".ogg")){
-                LOGGER.info("Registering sound: "+MOD_ID+":"+soundFileName);
-                Identifier soundId = new Identifier(MOD_ID, soundFileName);
-                SoundEvent soundEvent = new SoundEvent(soundId);
-                sounds.put(soundId, soundEvent);
-                Registry.register(Registry.SOUND_EVENT, soundId, soundEvent);
-            }
+        try {
+            FilesUtil.createFiles();
+            FilesUtil.readSoundsJson();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        for(int i = 0; i<FilesUtil.getSoundsCount(); i++) { // net.minecraft.class_151: Non [a-z0-9/._-] character in path of location: cursedmod:put!e
+            String soundFile = FilesUtil.getSoundsName().get(i);
+            String soundFileName = soundFile.split(".ogg")[0];
+
+            LOGGER.info("Registering sound: "+MOD_ID+":"+soundFileName);
+            Identifier soundId = new Identifier(MOD_ID, soundFileName);
+            SoundEvent soundEvent = new SoundEvent(soundId);
+            sounds.put(soundId, soundEvent);
+            Registry.register(Registry.SOUND_EVENT, soundId, soundEvent);
         }
     }
 

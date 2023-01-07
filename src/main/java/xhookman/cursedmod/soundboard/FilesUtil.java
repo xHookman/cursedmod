@@ -5,21 +5,29 @@ import xhookman.cursedmod.ModLauncher;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Random;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 
+import static xhookman.cursedmod.Cursedmod.MOD_ID;
+
 public class FilesUtil {
     private static File soundboardDir;
     private static String newJarName;
+    private static int soundsCount;
+    private static ArrayList<String> soundsName;
     
     public static void checkFilesName(File dir){
         for (File file : dir.listFiles()) {
-            String soundFileName = file.getName().split(".ogg")[0];
-            if(!soundFileName.matches("[a-z0-9_]")){
-                file.renameTo(new File(dir, soundFileName.replaceAll("[^a-z0-9_]+", "")+".ogg"));
+            if(file.getName().endsWith(".ogg")) {
+                String soundFileName = file.getName().split(".ogg")[0];
+                System.out.println("Ajout de " + soundFileName);
+                if (!file.getName().matches("[a-z0-9_]")) {
+                    file.renameTo(new File(dir, soundFileName.replaceAll("[^a-z0-9_]+", "")+".ogg"));
+                }
             }
         }
     }
@@ -87,7 +95,8 @@ public class FilesUtil {
                 }
             }
             for(int i=0; i<folder.listFiles().length; i++)
-                addFile(jos, "assets/cursedmod/sounds/" + soundboardDir.listFiles()[i].getName(), soundboardDir.getPath() + "/" + soundboardDir.listFiles()[i].getName());
+                if(folder.listFiles()[i].getName().endsWith(".ogg"))
+                    addFile(jos, "assets/cursedmod/sounds/" + soundboardDir.listFiles()[i].getName(), soundboardDir.getPath() + "/" + soundboardDir.listFiles()[i].getName());
 
             addFileJson(jos, "assets/cursedmod/sounds.json", generateSoundsJson(folder));
 
@@ -102,26 +111,48 @@ public class FilesUtil {
                 String content = "{";
 
                 for(int i=0; i<folder.listFiles().length; i++){
-                    String fileName = folder.listFiles()[i].getName().split(".ogg")[0];
-                    content += "\"" + fileName + "\": {\n" +
-                            "    \"sounds\": [\n" +
-                            "      \"cursedmod:" + fileName + "\"\n" +
-                            "    ]\n";
-                            if(i+1<folder.listFiles().length)
-                                content+="  },\n";
-                            else
-                                content+="  }\n";
+                    if(folder.listFiles()[i].getName().endsWith(".ogg")) {
+                        String fileName = folder.listFiles()[i].getName().split(".ogg")[0];
+                        content += "\"" + fileName + "\": {\n" +
+                                "    \"sounds\": [\n" +
+                                "      \"cursedmod:" + fileName + "\"\n" +
+                                "    ]\n";
+                        if (i + 1 < folder.listFiles().length)
+                            content += "  },\n";
+                        else
+                            content += "  }\n";
+                    }
                 }
                 content+="}";
                 return content;
     }
 
-
-    public static String getJarName() {
-        return ModLauncher.class.getProtectionDomain().getCodeSource().getLocation().getFile();
+    public static int getSoundsCount(){
+        return soundsCount;
     }
 
-    public static String getNewJarName() {
-        return newJarName;
+    public static ArrayList<String> getSoundsName(){
+        return soundsName;
+    }
+
+    public static void readSoundsJson() throws IOException {
+        soundsName = new ArrayList<>();
+        InputStream inputStream = SoundboardServer.class.getResourceAsStream("/assets/"+ MOD_ID + "/sounds.json");
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+        BufferedReader reader = new BufferedReader(inputStreamReader);
+        String line;
+        for(int i=0; (line = reader.readLine()) != null; i++){
+            if(line.contains(MOD_ID + ":")){
+                soundsCount++;
+                soundsName.add(line.split(":")[1].split("\"")[0]);
+            }
+        }
+
+        reader.close();
+        inputStreamReader.close();
+        inputStream.close();
+    }
+    public static String getJarName() {
+        return ModLauncher.class.getProtectionDomain().getCodeSource().getLocation().getFile();
     }
 }

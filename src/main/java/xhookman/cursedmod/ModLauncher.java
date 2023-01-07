@@ -16,7 +16,7 @@ public class ModLauncher {
             FilesUtil.generateFiles(dir);
             System.out.println("Mod updated! Please delete this jar after you closed it.");
             //show a message box
-            String message = "Mod updated! Please delete this jar after you closed it.";
+            String message = "Mod updated! You can delete this jar after you closed it.";
             String title = "Soundboard Updater";
             JOptionPane.showConfirmDialog(null, message, title, JOptionPane.DEFAULT_OPTION);}
 }
