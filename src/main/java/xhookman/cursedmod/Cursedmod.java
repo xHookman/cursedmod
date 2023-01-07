@@ -4,7 +4,9 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
@@ -20,6 +22,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -113,7 +116,7 @@ public class Cursedmod implements ModInitializer {
         Registry.register(Registry.SOUND_EVENT, Cursedmod.MY_SOUND_ID, MY_SOUND_EVENT);
 
         LOGGER.info("Je suis le serveur (" + MOD_ID + " est chargé)");
-        ServerPlayNetworking.registerGlobalReceiver(MY_SOUND_ID, (server, player, handler, buf, responseSender) -> {
+        ServerPlayNetworking.registerGlobalReceiver(new Identifier("test_son_ench"), (server, player, handler, buf, responseSender) -> {
             LOGGER.info("Packet reçu de " + player.getEntityName());
             server.getPlayerManager().broadcast(Text.of(server.getServerIp()), false);
             Identifier soundId = buf.readIdentifier();
@@ -163,12 +166,11 @@ public class Cursedmod implements ModInitializer {
         @Override
         public void onTargetDamaged(LivingEntity user, Entity target, int level) {
                 LOGGER.info("GROS TEST CA MERE");
-                ServerWorld world =((ServerWorld) user.world);
+                //ServerWorld world =((ServerWorld) user.world);
                 PlayerEntity player =((PlayerEntity) user);
-                BlockPos position=target.getBlockPos();
+                //BlockPos position=target.getBlockPos();
 
                 player.world.playSoundFromEntity(null, player, MY_SOUND_EVENT, SoundCategory.PLAYERS, 1.0F, 1.0F);
-
             super.onTargetDamaged(user,target,level);
         }
 

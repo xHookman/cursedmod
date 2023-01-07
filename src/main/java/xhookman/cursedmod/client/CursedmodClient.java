@@ -5,10 +5,13 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
@@ -61,6 +64,11 @@ public class CursedmodClient implements ClientModInitializer {
 
 				if(!client.getSoundManager().isPlaying(sound)){
 					client.getSoundManager().play(sound);
+                    PacketByteBuf buf = PacketByteBufs.create();
+                    buf.writeIdentifier(MY_SOUND_ID);
+                    buf.retain();
+                    ClientPlayNetworking.send(new Identifier("test_son_ench"), buf);
+                    buf.release();
 				}
                 //send a public message in server chat
                 //client.getServer().getWorld(ServerWorld.OVERWORLD).playSound(null, player.getX(), player.getY(), player.getZ(), MY_SOUND_EVENT, SoundCategory.PLAYERS, 1.0F, 1.0F);
