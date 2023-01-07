@@ -5,23 +5,20 @@ import xhookman.cursedmod.ModLauncher;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Objects;
 import java.util.Random;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 
-import static xhookman.cursedmod.Cursedmod.MOD_ID;
+import static xhookman.cursedmod.soundboard.SoundJsonUtils.generateSoundsJson;
 
 public class FilesUtil {
     private static File soundboardDir;
-    private static String newJarName;
-    private static int soundsCount;
-    private static ArrayList<String> soundsName;
-    
+
     public static void checkFilesName(File dir){
-        for (File file : dir.listFiles()) {
+        for (File file : Objects.requireNonNull(dir.listFiles())) {
             if(file.getName().endsWith(".ogg")) {
                 String soundFileName = file.getName().split(".ogg")[0];
                 System.out.println("Ajout de " + soundFileName);
@@ -31,7 +28,7 @@ public class FilesUtil {
             }
         }
     }
-    ;
+
     public static void createFiles(){
         soundboardDir = new File("soundboard/");
         if (!soundboardDir.exists()) {
@@ -42,16 +39,6 @@ public class FilesUtil {
         return soundboardDir;
     }
 
-    public static void addFileJson(JarOutputStream jos, String name, String data) throws IOException {
-        jos.putNextEntry(new JarEntry(name));
-        InputStream is = new ByteArrayInputStream(data.getBytes());
-        byte[] buffer = new byte[1024];
-        int bytesRead;
-        while ((bytesRead = is.read(buffer)) != -1) {
-            jos.write(buffer, 0, bytesRead);
-        }
-        is.close();
-    }
     public static void addFile(JarOutputStream jos, String name, String path) throws IOException {
         jos.putNextEntry(new JarEntry(name));
         InputStream is = Files.newInputStream(Paths.get(path));
@@ -71,7 +58,7 @@ public class FilesUtil {
             Random r = new Random();
 
             // Create a new .jar file for writing
-            newJarName = "soundboard" + r.nextLong() + ".jar";
+            String newJarName = "soundboard" + r.nextLong() + ".jar";
             JarOutputStream jos = new JarOutputStream(new FileOutputStream(newJarName));
             // Iterate through all the entries in the original .jar file
             Enumeration<JarEntry> entries = originalJar.entries();
@@ -94,11 +81,14 @@ public class FilesUtil {
                     is.close();
                 }
             }
-            for(int i=0; i<folder.listFiles().length; i++)
-                if(folder.listFiles()[i].getName().endsWith(".ogg"))
-                    addFile(jos, "assets/cursedmod/sounds/" + soundboardDir.listFiles()[i].getName(), soundboardDir.getPath() + "/" + soundboardDir.listFiles()[i].getName());
+            File[] files = folder.listFiles();
+            File[] soundsFiles = soundboardDir.listFiles();
 
-            addFileJson(jos, "assets/cursedmod/sounds.json", generateSoundsJson(folder));
+            for(int i=0; i<files.length; i++)
+                if(files[i].getName().endsWith(".ogg"))
+                    addFile(jos, "assets/cursedmod/sounds/" + soundsFiles[i].getName(), soundboardDir.getPath() + "/" + soundsFiles[i].getName());
+
+            SoundJsonUtils.addFile(jos, "assets/cursedmod/sounds.json", generateSoundsJson(folder));
 
             // Close the streams
             originalJar.close();
@@ -107,51 +97,7 @@ public class FilesUtil {
             e.printStackTrace();
         }
     }
-    private static String generateSoundsJson(File folder) {
-                String content = "{";
 
-                for(int i=0; i<folder.listFiles().length; i++){
-                    if(folder.listFiles()[i].getName().endsWith(".ogg")) {
-                        String fileName = folder.listFiles()[i].getName().split(".ogg")[0];
-                        content += "\"" + fileName + "\": {\n" +
-                                "    \"sounds\": [\n" +
-                                "      \"cursedmod:" + fileName + "\"\n" +
-                                "    ]\n";
-                        if (i + 1 < folder.listFiles().length)
-                            content += "  },\n";
-                        else
-                            content += "  }\n";
-                    }
-                }
-                content+="}";
-                return content;
-    }
-
-    public static int getSoundsCount(){
-        return soundsCount;
-    }
-
-    public static ArrayList<String> getSoundsName(){
-        return soundsName;
-    }
-
-    public static void readSoundsJson() throws IOException {
-        soundsName = new ArrayList<>();
-        InputStream inputStream = SoundboardServer.class.getResourceAsStream("/assets/"+ MOD_ID + "/sounds.json");
-        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-        BufferedReader reader = new BufferedReader(inputStreamReader);
-        String line;
-        for(int i=0; (line = reader.readLine()) != null; i++){
-            if(line.contains(MOD_ID + ":")){
-                soundsCount++;
-                soundsName.add(line.split(":")[1].split("\"")[0]);
-            }
-        }
-
-        reader.close();
-        inputStreamReader.close();
-        inputStream.close();
-    }
     public static String getJarName() {
         return ModLauncher.class.getProtectionDomain().getCodeSource().getLocation().getFile();
     }

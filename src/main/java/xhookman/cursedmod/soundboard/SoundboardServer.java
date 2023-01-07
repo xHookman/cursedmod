@@ -24,13 +24,13 @@ public class SoundboardServer {
     public SoundboardServer(){
         try {
             FilesUtil.createFiles();
-            FilesUtil.readSoundsJson();
+            SoundJsonUtils.readSoundsJson();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        for(int i = 0; i<FilesUtil.getSoundsCount(); i++) { // net.minecraft.class_151: Non [a-z0-9/._-] character in path of location: cursedmod:put!e
-            String soundFile = FilesUtil.getSoundsName().get(i);
+        for(int i = 0; i< SoundJsonUtils.getSoundsCount(); i++) { // net.minecraft.class_151: Non [a-z0-9/._-] character in path of location: cursedmod:put!e
+            String soundFile = SoundJsonUtils.getSoundsName().get(i);
             String soundFileName = soundFile.split(".ogg")[0];
 
             LOGGER.info("Registering sound: "+MOD_ID+":"+soundFileName);
