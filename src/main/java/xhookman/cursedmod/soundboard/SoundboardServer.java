@@ -12,7 +12,6 @@ import java.util.Hashtable;
 
 import static net.fabricmc.fabric.impl.transfer.TransferApiImpl.LOGGER;
 import static xhookman.cursedmod.Cursedmod.MOD_ID;
-import static xhookman.cursedmod.soundboard.FilesUtil.checkFilesName;
 
 public class SoundboardServer {
     private static final Hashtable<Identifier, SoundEvent> sounds = new Hashtable<>();
@@ -23,18 +22,17 @@ public class SoundboardServer {
     public static Hashtable<Identifier, SoundEvent> getSoundHashtable(){
         return sounds;
     }
-    public SoundboardServer(){
-        LOGGER.info("SoundboardServer constructor");
-          FilesUtil.createFiles();
-        File dir = FilesUtil.getDir();
-        checkFilesName(dir);
-        FilesUtil.generateSoundsJson(dir);
 
+    public SoundboardServer(){
+        //FilesUtil.createFiles();
+        File dir = new File("mods/soundboard/");
+        LOGGER.info("Il y a " + dir.listFiles().length + " fichiers dans le dossier soundboard");
         for(int i=0; i<dir.listFiles().length; i++){ // net.minecraft.class_151: Non [a-z0-9/._-] character in path of location: cursedmod:put!e
             File soundFile = dir.listFiles()[i];
             String soundFileName = soundFile.getName().split(".ogg")[0];
+            LOGGER.info("soundFileName: " + soundFileName);
             if(soundFile.getName().endsWith(".ogg")){
-                FilesUtil.copyFile(soundFile);
+                LOGGER.info("Registering sound: "+MOD_ID+":"+soundFileName);
                 Identifier soundId = new Identifier(MOD_ID, soundFileName);
                 SoundEvent soundEvent = new SoundEvent(soundId);
                 sounds.put(soundId, soundEvent);
