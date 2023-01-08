@@ -2,6 +2,7 @@ package xhookman.cursedmod;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
@@ -12,20 +13,28 @@ import xhookman.cursedmod.block.VjbOre;
 import xhookman.cursedmod.utils.enchantments.PlaySoundEnchantment;
 
 import static net.fabricmc.fabric.impl.transfer.TransferApiImpl.LOGGER;
+import static xhookman.cursedmod.item.CustomItem.VJB;
 
 public class Cursedmod implements ModInitializer {
     public static final String MOD_ID = "cursedmod";
     public static final Identifier MY_SOUND_ID = new Identifier(MOD_ID+":mouche");
     public static SoundEvent MY_SOUND_EVENT=new SoundEvent(MY_SOUND_ID);
 
+
+
     @Override
     public void onInitialize() {
+        // item
+
+        //VJB peut etre brulé
+        FuelRegistry.INSTANCE.add(VJB, 200);
+
         // enchantements
         PlaySoundEnchantment.registerPlaySoundEnchantment();
 
         // blocks
-        VjbBlock.registerVjbBlock();
-        VjbOre.registerVjbOre();
+        VjbBlock.register();
+        VjbOre.register();
 
         Registry.register(Registry.SOUND_EVENT, Cursedmod.MY_SOUND_ID, MY_SOUND_EVENT);
 
