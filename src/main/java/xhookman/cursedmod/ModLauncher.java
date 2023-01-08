@@ -46,10 +46,10 @@ public class ModLauncher {
             checkFilesName(dir);
             System.out.println("Generating new jar...");
             FilesUtil.generateFiles(dir);
-            System.out.println("Mod updated! Please delete this jar after you closed it.");
+            System.out.println("Mod updated! The old jar will be deleted 2 seconds after you close this window.");
             //show a message box
 
-            String message = "Mod updated! Please delete this jar after you closed it, otherwise Fabric will not load the right mod";
+            String message = "Mod updated! The old jar will be deleted 2 seconds after you close this window.";
             String title = "Soundboard Updater";
             JOptionPane.showConfirmDialog(null, message, title, JOptionPane.DEFAULT_OPTION);
 

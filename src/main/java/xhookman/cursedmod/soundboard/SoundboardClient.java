@@ -16,17 +16,17 @@ import org.lwjgl.glfw.GLFW;
 import java.util.Hashtable;
 
 public class SoundboardClient {
-    private final KeyBinding keyJ, keyM;
+    private final KeyBinding keyJ, key0;
     PositionedSoundInstance sound;
 
     protected Hashtable<Identifier, SoundEvent> sounds;
-    private static final KeyBinding[] KEY_BINDINGS = new KeyBinding[10];
+    private static final KeyBinding[] KEY_BINDINGS = new KeyBinding[9];
 
     public SoundboardClient(){ // Faire touche 0 pour arreter le son plutot que M
 
             for (int i = 0; i < KEY_BINDINGS.length; i++) {
                 KEY_BINDINGS[i] = KeyBindingHelper.registerKeyBinding(
-                        new KeyBinding("Play sound " + i, InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_KP_0 + i, "key.category.soundboard"));
+                        new KeyBinding("Play sound " + i, InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_KP_1 + i, "key.category.soundboard"));
             }
 
         keyJ = KeyBindingHelper.registerKeyBinding(new KeyBinding(
@@ -35,10 +35,10 @@ public class SoundboardClient {
                 GLFW.GLFW_KEY_J, // The keycode of the key
                 "category.cursedmod.sound" // The translation key of the keybinding's category.
         ));
-        keyM = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+        key0 = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "Stop sound", // The translation key of the keybinding's name
                 InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
-                GLFW.GLFW_KEY_M, // The keycode of the key
+                GLFW.GLFW_KEY_KP_0, // The keycode of the key
                 "category.cursedmod.sound" // The translation key of the keybinding's category.
         ));
         sounds= SoundboardServer.getSoundHashtable();
@@ -76,7 +76,7 @@ public class SoundboardClient {
             while (keyJ.wasPressed()) {
                 MinecraftClient.getInstance().setScreenAndRender(new SoundboardGui(this));
             }
-            while (keyM.wasPressed()) {
+            while (key0.wasPressed()) {
                 stopSound();
             }
         });
