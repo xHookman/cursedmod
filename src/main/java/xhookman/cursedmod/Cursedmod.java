@@ -1,7 +1,6 @@
 package xhookman.cursedmod;
 
 import net.fabricmc.api.ModInitializer;
-import xhookman.cursedmod.soundboard.SoundboardServer;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -21,10 +20,6 @@ public class Cursedmod implements ModInitializer {
 
     @Override
     public void onInitialize() {
-     LOGGER.info("Je suuis le serveur (" + MOD_ID + " est chargé)");
-        SoundboardServer soundboard = new SoundboardServer();
-        soundboard.playSoundWhenKeyPressed();
-        
         // enchantements
         PlaySoundEnchantment.registerPlaySoundEnchantment();
 
@@ -34,6 +29,7 @@ public class Cursedmod implements ModInitializer {
 
         Registry.register(Registry.SOUND_EVENT, Cursedmod.MY_SOUND_ID, MY_SOUND_EVENT);
 
+        LOGGER.info("Je suis le serveur (" + MOD_ID + " est chargé)");
         ServerPlayNetworking.registerGlobalReceiver(new Identifier("test_son_ench"), (server, player, handler, buf, responseSender) -> {
             LOGGER.info("Packet reçu de " + player.getEntityName());
             server.getPlayerManager().broadcast(Text.of(server.getServerIp()), false);
@@ -47,4 +43,5 @@ public class Cursedmod implements ModInitializer {
             });
         });
     }
+
 }
