@@ -70,7 +70,7 @@ public class FilesUtil {
                 // If the entry is the file you want to add, don't copy it
                 // from the original .jar. Instead, add it to the new .jar
                 // using the addFile() method
-                if (!entry.getName().startsWith("assets/cursedmod/")) {
+                if (!entry.getName().startsWith("assets/cursedmod/sounds/") || !entry.getName().equals("assets/cursedmod/sounds.json")) {
                     // copy the entry from the original .jar to the new .jar
                     jos.putNextEntry(new JarEntry(entry.getName()));
                     InputStream is = originalJar.getInputStream(entry);
