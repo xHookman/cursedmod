@@ -53,6 +53,6 @@ public class SoundboardServer {
             });
         });
 
-        ServerPlayNetworking.registerGlobalReceiver(new Identifier("stop_sound"), (server, player, handler, buf, responseSender) -> server.execute(() -> server.getCommandManager().executeWithPrefix(player.getCommandSource(), "stopsound " + player.getEntityName())));
+        ServerPlayNetworking.registerGlobalReceiver(new Identifier("stop_sound"), (server, player, handler, buf, responseSender) -> server.execute(() -> server.getCommandManager().executeWithPrefix(player.getCommandSource().withSilent(), "stopsound " + player.getEntityName())));
     }
 }
