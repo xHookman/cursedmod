@@ -16,58 +16,68 @@ import org.lwjgl.glfw.GLFW;
 import java.util.Hashtable;
 
 public class SoundboardClient {
-    private final KeyBinding key0, key1, keyR;
+    private final KeyBinding keyJ, keyM;
     PositionedSoundInstance sound;
 
     protected Hashtable<Identifier, SoundEvent> sounds;
+    private static final KeyBinding[] KEY_BINDINGS = new KeyBinding[10];
 
     public SoundboardClient(){
-        key0 = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.cursedmod.key0", // The translation key of the keybinding's name
+
+            for (int i = 0; i < KEY_BINDINGS.length; i++) {
+                KEY_BINDINGS[i] = KeyBindingHelper.registerKeyBinding(
+                        new KeyBinding("Play sound " + i, InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_KP_0 + i, "key.category.soundboard"));
+            }
+
+        keyJ = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "Open soundboard", // The translation key of the keybinding's name
                 InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
-                GLFW.GLFW_KEY_0, // The keycode of the key
+                GLFW.GLFW_KEY_J, // The keycode of the key
                 "category.cursedmod.sound" // The translation key of the keybinding's category.
         ));
-        key1 = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.cursedmod.key1", // The translation key of the keybinding's name
+        keyM = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "Stop sound", // The translation key of the keybinding's name
                 InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
-                GLFW.GLFW_KEY_1, // The keycode of the key
-                "category.cursedmod.sound" // The translation key of the keybinding's category.
-        ));
-        keyR = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.cursedmod.keyR", // The translation key of the keybinding's name
-                InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
-                GLFW.GLFW_KEY_R, // The keycode of the key
+                GLFW.GLFW_KEY_M, // The keycode of the key
                 "category.cursedmod.sound" // The translation key of the keybinding's category.
         ));
         sounds= SoundboardServer.getSoundHashtable();
     }
-    private void playSound(Identifier soundId, MinecraftClient client){
+    protected void playSound(Identifier soundId){
         sound = PositionedSoundInstance.master(sounds.get(soundId), 1.0F);
-        if (!client.getSoundManager().isPlaying(sound)) {
-            client.getSoundManager().play(sound);
+       // if (!client.getSoundManager().isPlaying(sound)) {
+          //  client.getSoundManager().play(sound);
             PacketByteBuf buf = PacketByteBufs.create();
             buf.writeIdentifier(soundId);
             buf.retain();
             ClientPlayNetworking.send(new Identifier("play_sound"), buf);
             buf.release();
-        }
+       // }
     }
 
-    protected void playSound(Identifier soundId){
-        playSound(soundId, MinecraftClient.getInstance());
+    private void stopSound(){
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.retain();
+        ClientPlayNetworking.send(new Identifier("stop_sound"), buf);
+        buf.release();
     }
 
     public void playSoundWhenKeyPressed(){
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while (key0.wasPressed()) {
-                playSound(sounds.keys().nextElement(), client);
+            //get key at index 0 from sounds
+            int i = 0;
+            for(Identifier soundId : sounds.keySet()){
+                if(KEY_BINDINGS[i].wasPressed()){
+                    playSound(soundId);
+                }
+                i++;
             }
-            while (key1.wasPressed()) {
-                playSound(sounds.keys().nextElement(), client);
-            }
-            while (keyR.wasPressed()) {
+
+            while (keyJ.wasPressed()) {
                 MinecraftClient.getInstance().setScreenAndRender(new SoundboardGui(this));
+            }
+            while (keyM.wasPressed()) {
+                stopSound();
             }
         });
     }

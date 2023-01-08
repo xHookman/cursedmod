@@ -3,7 +3,6 @@ package xhookman.cursedmod.soundboard;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import java.util.Hashtable;
@@ -20,7 +19,6 @@ public class SoundboardServer {
     public static Hashtable<Identifier, SoundEvent> getSoundHashtable(){
         return sounds;
     }
-
     public SoundboardServer(){
         try {
             FilesUtil.createFiles();
@@ -49,10 +47,12 @@ public class SoundboardServer {
             SoundEvent sound = sounds.get(soundId);
             //play sound for all players
             server.execute(() -> {
-                player.world.playSoundFromEntity(player, player, sound, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                player.world.playSoundFromEntity(null, player, sound, SoundCategory.PLAYERS, 1.0F, 1.0F);
                 //send a public message to all players
-                server.getPlayerManager().broadcast(Text.of("Sound played by " + player.getEntityName()), false);
+                //server.getPlayerManager().broadcast(Text.of("Sound played by " + player.getEntityName()), false);
             });
         });
+
+        ServerPlayNetworking.registerGlobalReceiver(new Identifier("stop_sound"), (server, player, handler, buf, responseSender) -> server.execute(() -> server.getCommandManager().executeWithPrefix(player.getCommandSource(), "stopsound " + player.getEntityName())));
     }
 }
