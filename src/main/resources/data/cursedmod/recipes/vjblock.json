@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WWW",
+    "WWW",
+    "WWW"
+  ],
+  "key": {
+    "W": {
+      "item": "cursedmod:vjb"
+    }
+  },
+  "result": {
+    "item": "cursedmod:vjblock",
+    "count": 1
+  }
+}

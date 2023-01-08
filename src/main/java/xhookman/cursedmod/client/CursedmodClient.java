@@ -9,7 +9,6 @@ import xhookman.cursedmod.soundboard.SoundboardClient;
 
 import static xhookman.cursedmod.Cursedmod.MOD_ID;
 
-
 @Environment(EnvType.CLIENT)
 public class CursedmodClient implements ClientModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
