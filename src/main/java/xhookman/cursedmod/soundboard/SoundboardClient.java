@@ -22,7 +22,7 @@ public class SoundboardClient {
     protected Hashtable<Identifier, SoundEvent> sounds;
     private static final KeyBinding[] KEY_BINDINGS = new KeyBinding[10];
 
-    public SoundboardClient(){
+    public SoundboardClient(){ // Faire touche 0 pour arreter le son plutot que M
 
             for (int i = 0; i < KEY_BINDINGS.length; i++) {
                 KEY_BINDINGS[i] = KeyBindingHelper.registerKeyBinding(

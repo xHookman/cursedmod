@@ -16,6 +16,7 @@ import static xhookman.cursedmod.soundboard.SoundJsonUtils.generateSoundsJson;
 
 public class FilesUtil {
     private static File soundboardDir;
+    private static String newJarName;
 
     public static void checkFilesName(File dir){
         for (File file : Objects.requireNonNull(dir.listFiles())) {
@@ -53,12 +54,12 @@ public class FilesUtil {
     public static void generateFiles(File folder) {
         // Open the original .jar file for reading
         try {
-            JarFile originalJar = new JarFile(getJarName());
+            JarFile originalJar = new JarFile(getJarPath());
 
             Random r = new Random();
 
             // Create a new .jar file for writing
-            String newJarName = "soundboard" + r.nextLong() + ".jar";
+            newJarName = "soundboard" + r.nextLong() + ".jar";
             JarOutputStream jos = new JarOutputStream(new FileOutputStream(newJarName));
             // Iterate through all the entries in the original .jar file
             Enumeration<JarEntry> entries = originalJar.entries();
@@ -98,7 +99,11 @@ public class FilesUtil {
         }
     }
 
-    public static String getJarName() {
+    public static String getJarPath() {
         return ModLauncher.class.getProtectionDomain().getCodeSource().getLocation().getFile();
+    }
+
+    public static String getNewJarName() {
+        return newJarName;
     }
 }
