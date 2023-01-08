@@ -9,8 +9,7 @@ import java.util.Hashtable;
 
 public class SoundboardGui extends Screen {
     SoundboardClient soundboardClient;
-    private final int BUTTON_WIDTH = 100;
-    private final int BUTTON_HEIGHT = 20;
+
     public SoundboardGui(SoundboardClient soundboardClient) {
         super(Text.of("Soundboard"));
         this.soundboardClient = soundboardClient;
@@ -18,13 +17,17 @@ public class SoundboardGui extends Screen {
 
     @Override
     public void init() {
+        int BUTTON_HEIGHT = 20;
+        int BUTTON_WIDTH = 100;
+
         Hashtable<Identifier, SoundEvent> sounds = SoundboardServer.getSoundHashtable();
         int i = 0;
 
         //add a button for each sound
         for(Identifier soundId : sounds.keySet()){
-            this.addDrawableChild(new ButtonWidget(10, 10+i, 100, 20, Text.of(soundId.getPath()), (button) -> soundboardClient.playSound(soundId)));
-            i+=BUTTON_HEIGHT;
+
+            this.addDrawableChild(new ButtonWidget(10, 10+i, BUTTON_WIDTH, BUTTON_HEIGHT, Text.of(soundId.getPath()), (button) -> soundboardClient.playSound(soundId)));
+            i+= BUTTON_HEIGHT;
         }
     }
 }
