@@ -32,7 +32,7 @@ public class ModLauncher {
         }
         // Executing batch
         try {
-            ProcessBuilder pb = new ProcessBuilder("powershell", "-Command", "Start-Sleep -Seconds 2; Start-Process -FilePath 'deleteJar.bat'"); // Obliged because Windows is trash and doing it with a cmd does not work
+            ProcessBuilder pb = new ProcessBuilder("powershell", "-Command", "Start-Sleep -Seconds 2; Start-Process -FilePath 'deleteJar.bat'"); // Obliged because Windows 11 is trash and doing it with a cmd does not work
             System.out.println("Deleting jar...");
             pb.start();
         } catch (Exception e) {
