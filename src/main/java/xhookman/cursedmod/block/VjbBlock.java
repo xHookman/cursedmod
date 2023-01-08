@@ -29,8 +29,8 @@ public class VjbBlock {
     public static void registerVjbBlock() {
         registerBlock("vjblock", VJBLOCK, ItemGroup.BUILDING_BLOCKS);
         FuelRegistry.INSTANCE.add(VJBLOCK, 2000);
-        Registry.register(Registry.BLOCK, new Identifier("cursedmod", "vjblock"), VJBLOCK);
-        Registry.register(Registry.ITEM, new Identifier("cursedmod", "vjblock"), new BlockItem(VJBLOCK, new FabricItemSettings().group(VjbGroupItem)));
+       // Registry.register(Registry.BLOCK, new Identifier("cursedmod", "vjblock"), VJBLOCK);
+       // Registry.register(Registry.ITEM, new Identifier("cursedmod", "vjblock"), new BlockItem(VJBLOCK, new FabricItemSettings().group(VjbGroupItem)));
     }
 
 

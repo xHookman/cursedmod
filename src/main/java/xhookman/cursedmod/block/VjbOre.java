@@ -37,7 +37,7 @@ public class VjbOre {
             )); // height
 
     public static void registerVjbOre(){
-        Registry.register(Registry.BLOCK, new Identifier("cursedmod", "vjbore"), VJBORE);
+       Registry.register(Registry.BLOCK, new Identifier("cursedmod", "vjbore"), VJBORE);
         Registry.register(Registry.ITEM, new Identifier("cursedmod", "vjbore"), new BlockItem(VJBORE, new FabricItemSettings().group(VjbGroupItem)));
         Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,
                 new Identifier("cursedmod", "overworld_vjbore"), OVERWORLD_VJBORE_CONFIGURED_FEATURE);

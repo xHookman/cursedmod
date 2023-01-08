@@ -38,7 +38,7 @@ public class PlaySoundEnchantment extends Enchantment {
     }
 
     public static void registerPlaySoundEnchantment(){
-        Registry.register(Registry.ENCHANTMENT,new Identifier("cursedmod","Nom_Enchant"),new PlaySoundEnchantment());
+        Registry.register(Registry.ENCHANTMENT,new Identifier("cursedmod","nom_enchant"),new PlaySoundEnchantment());
     }
 
 }

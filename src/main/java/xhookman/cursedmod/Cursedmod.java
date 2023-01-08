@@ -32,7 +32,7 @@ public class Cursedmod implements ModInitializer {
         VjbBlock.registerVjbBlock();
         VjbOre.registerVjbOre();
 
-        Registry.register(Registry.SOUND_EVENT, Cursedmod.MY_SOUND_ID, MY_SOUND_EVENT);
+        //Registry.register(Registry.SOUND_EVENT, Cursedmod.MY_SOUND_ID, MY_SOUND_EVENT);
 
         ServerPlayNetworking.registerGlobalReceiver(new Identifier("test_son_ench"), (server, player, handler, buf, responseSender) -> {
             LOGGER.info("Packet reçu de " + player.getEntityName());
