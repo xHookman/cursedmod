@@ -43,21 +43,9 @@ public class Cursedmod implements ModInitializer {
         Registry.register(Registry.SOUND_EVENT, Cursedmod.MY_SOUND_ID, MY_SOUND_EVENT);
 
         // packet
-        packetReceiverSummonLastResort();
+        LastResort.packetReceiverSummonLastResort();
+        PlaySound.packetRecieverSound();
 
-        LOGGER.info("Je suis le serveur (" + MOD_ID + " est chargé)");
-        ServerPlayNetworking.registerGlobalReceiver(new Identifier("test_son_ench"), (server, player, handler, buf, responseSender) -> {
-            LOGGER.info("Packet reçu de " + player.getEntityName());
-            server.getPlayerManager().broadcast(Text.of(server.getServerIp()), false);
-            Identifier soundId = buf.readIdentifier();
-            server.getPlayerManager().broadcast(Text.of(soundId.toString()), false);
-            //play sound for all players
-            server.execute(() -> {
-                player.world.playSoundFromEntity(player, player, MY_SOUND_EVENT, SoundCategory.PLAYERS, 1.0F, 1.0F);
-                //send a public message to all players
-                server.getPlayerManager().broadcast(Text.of("Sound played"), false);
-            });
-        });
     }
 
 }
