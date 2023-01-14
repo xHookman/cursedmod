@@ -19,6 +19,8 @@ import net.minecraft.world.gen.placementmodifier.SquarePlacementModifier;
 
 import java.util.Arrays;
 
+import static xhookman.cursedmod.Cursedmod.MOD_ID;
+
 public class VjbOre extends ModdedBlock {
     public static final Block VJBORE = new Block(FabricBlockSettings.of(Material.STONE).strength(4.0f).requiresTool());
 
@@ -42,13 +44,13 @@ public class VjbOre extends ModdedBlock {
         registerBlock("vjbore", VJBORE, VjbGroupItem);
 
         Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,
-                new Identifier("cursedmod", "overworld_vjbore"), OVERWORLD_VJBORE_CONFIGURED_FEATURE);
+                new Identifier(MOD_ID, "overworld_vjbore"), OVERWORLD_VJBORE_CONFIGURED_FEATURE);
 
-        Registry.register(BuiltinRegistries.PLACED_FEATURE, new Identifier("cursedmod", "overworld_vjbore"),
+        Registry.register(BuiltinRegistries.PLACED_FEATURE, new Identifier(MOD_ID, "overworld_vjbore"),
                 OVERWORLD_VJBORE_PLACED_FEATURE);
 
         BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES,
                 RegistryKey.of(Registry.PLACED_FEATURE_KEY,
-                        new Identifier("cursedmod", "overworld_vjbore")));
+                        new Identifier(MOD_ID, "overworld_vjbore")));
     }
 }

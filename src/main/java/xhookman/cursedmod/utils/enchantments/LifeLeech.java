@@ -10,6 +10,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
+import static xhookman.cursedmod.Cursedmod.MOD_ID;
+
 public class LifeLeech extends Enchantment {
     public LifeLeech() {
         super(Rarity.VERY_RARE, EnchantmentTarget.WEAPON, new EquipmentSlot[] {EquipmentSlot.MAINHAND});
@@ -36,7 +38,7 @@ public class LifeLeech extends Enchantment {
     }
 
     public static void registerLifeLeech(){
-        Registry.register(Registry.ENCHANTMENT,new Identifier("cursedmod","life_leech"),new LifeLeech());
+        Registry.register(Registry.ENCHANTMENT,new Identifier(MOD_ID,"life_leech"),new LifeLeech());
     }
 
 }

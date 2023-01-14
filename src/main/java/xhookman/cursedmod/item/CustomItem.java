@@ -16,13 +16,14 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
+import static xhookman.cursedmod.Cursedmod.MOD_ID;
 import static xhookman.cursedmod.Cursedmod.MY_SOUND_EVENT;
 import static xhookman.cursedmod.block.ModdedBlock.VjbGroupItem;
 
 public class CustomItem extends Item {
 
     public final static CustomItem VJB =
-            Registry.register(Registry.ITEM, new Identifier("cursedmod", "vjb"),
+            Registry.register(Registry.ITEM, new Identifier(MOD_ID, "vjb"),
                     new CustomItem(new FabricItemSettings().maxCount(64).group(VjbGroupItem)));
 
     public CustomItem(Settings settings) {

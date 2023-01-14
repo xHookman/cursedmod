@@ -16,7 +16,7 @@ import static xhookman.cursedmod.Cursedmod.MOD_ID;
 
 public abstract class ModdedBlock {
     public static final CustomItem VJBicon =
-            Registry.register(Registry.ITEM, new Identifier("cursedmod", "vjbicon"),
+            Registry.register(Registry.ITEM, new Identifier(MOD_ID, "vjbicon"),
                     new CustomItem(new FabricItemSettings()));
     public final static ItemGroup VjbGroupItem = FabricItemGroupBuilder.build(new Identifier(MOD_ID, "vjbgroup"),
             () -> new ItemStack(VJBicon));

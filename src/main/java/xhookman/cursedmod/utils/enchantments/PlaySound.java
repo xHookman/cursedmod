@@ -10,6 +10,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
+import static xhookman.cursedmod.Cursedmod.MOD_ID;
 import static xhookman.cursedmod.Cursedmod.MY_SOUND_EVENT;
 
 public class PlaySound extends Enchantment {
@@ -38,7 +39,7 @@ public class PlaySound extends Enchantment {
     }
 
     public static void registerPlaySound(){
-        Registry.register(Registry.ENCHANTMENT,new Identifier("cursedmod","musique"),new PlaySound());
+        Registry.register(Registry.ENCHANTMENT,new Identifier(MOD_ID,"musique"),new PlaySound());
     }
 
 }
