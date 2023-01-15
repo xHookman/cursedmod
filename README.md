@@ -27,14 +27,14 @@
 
 <h1 id="Enchantements" style="font-size:30px;">Enchantements Ajoutés</h1>
 
-Plastron :
+<h3>Plastron :</h3>
 <ul>
-<li>Dernier recours : invoque une créature quand le porteur est attaqué par une entité</li>
+<li><strong>Dernier recours</strong> : invoque une créature quand le porteur est attaqué par une entité</li>
 </ul>  
 
-Arme :
+<h3>Arme :</h3>
 <ul>
-<li>Vol de vie : Rend une partie des degats en pv</li>
+<li><strong>Vol de vie</strong> : Rend une partie des degats en pv</li>
 </ul>  
 
 
@@ -42,7 +42,7 @@ Arme :
 
 <table align = "center">
   <tr align = "center">
-    <td><a href="https://github.com/xHookman/cursedmod/commits?author=NoteletL"><img src="https://avatars.githubusercontent.com/u/97942917?v=4" width="175px;" alt=""/><br /><sub><b>🧂 Alexis Guimbert 🧂</b></sub></a><br /></td>
+    <td><a href="[https://github.com/xHookman/cursedmod/commits?author=NoteletL](https://github.com/xHookman/cursedmod/commits?author=Alexis-42)"><img src="https://avatars.githubusercontent.com/u/97942917?v=4" width="175px;" alt=""/><br /><sub><b>🧂 Alexis Guimbert 🧂</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/xHookman/cursedmod/commits?author=xHookman"><img src="https://avatars.githubusercontent.com/u/77964646?v=4" width="175px;" alt=""/><br /><sub><b>xHookman</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/xHookman/cursedmod/commits?author=NoteletL"><img src="https://avatars.githubusercontent.com/u/97942901?v=4" width="175px;" alt=""/><br /><sub><b>Notelet Léo</b></sub></a><br /></td>
   </tr>
