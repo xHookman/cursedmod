@@ -38,7 +38,7 @@
 </ul>  
 
 
-<h1 id="Auteurs" style="font-size:30px;" align = "center">Auteurs</h1>
+<h1 id="Auteurs" style="font-size:30px;"align = "center">Auteurs</h1>
 
 <table align = "center">
   <tr align = "center">
