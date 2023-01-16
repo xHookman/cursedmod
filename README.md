@@ -29,7 +29,7 @@
 
 <h3>Plastron :</h3>
 <ul>
-<li><strong>Dernier recours</strong> : invoque une créature quand le porteur est attaqué par une entité</li>
+<li><strong>Dernier recours</strong> : invoque une créature quand le porteur est attaqué par une entité et est <50% de ses hp max </li>
 </ul>  
 
 <h3>Arme :</h3>
