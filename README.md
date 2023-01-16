@@ -44,7 +44,7 @@
 
 <table align = "center">
   <tr align = "center">
-    <td><a href="https://github.com/xHookman/cursedmod/commits?author=NoteletL](https://github.com/xHookman/cursedmod/commits?author=Alexis-42)"><img src="https://avatars.githubusercontent.com/u/97942917?v=4" width="175px;" alt=""/><br /><sub><b>🧂 Alexis Guimbert 🧂</b></sub></a><br /></td>
+    <td><a href="https://github.com/xHookman/cursedmod/commits?author=Alexis-42"><img src="https://avatars.githubusercontent.com/u/97942917?v=4" width="175px;" alt=""/><br /><sub><b>🧂 Alexis Guimbert 🧂</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/xHookman/cursedmod/commits?author=xHookman"><img src="https://avatars.githubusercontent.com/u/77964646?v=4" width="175px;" alt=""/><br /><sub><b>xHookman</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/xHookman/cursedmod/commits?author=NoteletL"><img src="https://avatars.githubusercontent.com/u/97942901?v=4" width="175px;" alt=""/><br /><sub><b>Notelet Léo</b></sub></a><br /></td>
   </tr>
