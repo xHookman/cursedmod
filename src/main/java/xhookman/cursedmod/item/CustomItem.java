@@ -1,12 +1,9 @@
 package xhookman.cursedmod.item;
 
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
@@ -21,22 +18,16 @@ import java.util.List;
 
 import static xhookman.cursedmod.Cursedmod.MOD_ID;
 import static xhookman.cursedmod.Cursedmod.MY_SOUND_EVENT;
+import static xhookman.cursedmod.block.ModdedBlock.VjbGroupItem;
 
 public class CustomItem extends Item {
 
-    public static final CustomItem VJBicon =
-            Registry.register(Registry.ITEM, new Identifier("cursedmod", "vjbicon"),
-                    new CustomItem(new FabricItemSettings()));
-    public final static ItemGroup VjbGroupItem = FabricItemGroupBuilder.build(new Identifier(MOD_ID, "vjbgroup"),
-            () -> new ItemStack(VJBicon));
-
     public final static CustomItem VJB =
-            Registry.register(Registry.ITEM, new Identifier("cursedmod", "vjb"),
+            Registry.register(Registry.ITEM, new Identifier(MOD_ID, "vjb"),
                     new CustomItem(new FabricItemSettings().maxCount(64).group(VjbGroupItem)));
+
     public CustomItem(Settings settings) {
         super(settings);
-        //VJB peut etre brulé
-        FuelRegistry.INSTANCE.add(VJB, 200);
     }
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity playerEntity, Hand hand) {

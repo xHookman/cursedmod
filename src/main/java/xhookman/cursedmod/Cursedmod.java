@@ -1,18 +1,21 @@
 package xhookman.cursedmod;
 
 import net.fabricmc.api.ModInitializer;
-import xhookman.cursedmod.soundboard.SoundboardServer;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.sound.SoundCategory;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import software.bernie.geckolib3.GeckoLib;
 import xhookman.cursedmod.block.VjbBlock;
 import xhookman.cursedmod.block.VjbOre;
-import xhookman.cursedmod.utils.enchantments.PlaySoundEnchantment;
+import xhookman.cursedmod.entity.Custom.LastResortEntity;
+import xhookman.cursedmod.entity.ModEntities;
+import xhookman.cursedmod.utils.enchantments.LastResort;
+import xhookman.cursedmod.utils.enchantments.LifeLeech;
+import xhookman.cursedmod.utils.enchantments.PlaySound;
 
-import static net.fabricmc.fabric.impl.transfer.TransferApiImpl.LOGGER;
+import static xhookman.cursedmod.item.CustomItem.VJB;
 
 public class Cursedmod implements ModInitializer {
     public static final String MOD_ID = "cursedmod";
@@ -21,30 +24,30 @@ public class Cursedmod implements ModInitializer {
 
     @Override
     public void onInitialize() {
-     LOGGER.info("Je suuis le serveur (" + MOD_ID + " est chargé)");
-        SoundboardServer soundboard = new SoundboardServer();
-        soundboard.playSoundWhenKeyPressed();
-        
+        // entity
+
+        // item
+        FuelRegistry.INSTANCE.add(VJB, 200);
+
         // enchantements
-        PlaySoundEnchantment.registerPlaySoundEnchantment();
+        PlaySound.registerPlaySound();
+        LifeLeech.registerLifeLeech();
+        LastResort.registerLastResort();
 
         // blocks
-        VjbBlock.registerVjbBlock();
-        VjbOre.registerVjbOre();
+        VjbBlock.register();
+        VjbOre.register();
 
-        //Registry.register(Registry.SOUND_EVENT, Cursedmod.MY_SOUND_ID, MY_SOUND_EVENT);
+        // sounds
+        Registry.register(Registry.SOUND_EVENT, Cursedmod.MY_SOUND_ID, MY_SOUND_EVENT);
 
-        ServerPlayNetworking.registerGlobalReceiver(new Identifier("test_son_ench"), (server, player, handler, buf, responseSender) -> {
-            LOGGER.info("Packet reçu de " + player.getEntityName());
-            server.getPlayerManager().broadcast(Text.of(server.getServerIp()), false);
-            Identifier soundId = buf.readIdentifier();
-            server.getPlayerManager().broadcast(Text.of(soundId.toString()), false);
-            //play sound for all players
-            server.execute(() -> {
-                player.world.playSoundFromEntity(player, player, MY_SOUND_EVENT, SoundCategory.PLAYERS, 1.0F, 1.0F);
-                //send a public message to all players
-                server.getPlayerManager().broadcast(Text.of("Sound played"), false);
-            });
-        });
+        // packet
+        LastResort.packetReceiverSummonLastResort();
+        PlaySound.packetRecieverSound();
+
+        GeckoLib.initialize();
+        FabricDefaultAttributeRegistry.register(ModEntities.LAST_RESORT_ENTITY, LastResortEntity.setAttributes());
+
     }
+
 }

@@ -6,5 +6,9 @@
   "block.cursedmod.vjblock": "VJBLOCK",
   "block.cursedmod.vjbore": "VJBORE",
 
-  "enchantment.cursedmod.son": "Musique"
+  "enchantment.cursedmod.musique": "Musique",
+  "enchantment.cursedmod.life_leech": "Vol de vie",
+  "enchantment.cursedmod.last_resort": "Dernier recours",
+
+  "entity.cursedmod.last_resort": "Entité de dernier recours"
 }
