@@ -4,21 +4,20 @@
 <details open="open">
   <summary>Sommaire</summary>
   <ol>
-    <li><a href="#Items">Items Ajoutés</a></li>
-    <li>
-      <a href="#Blocs"> Blocs Ajoutés</a>  
-    </li>
-    <li><a href="#Enchantements">Enchantements Ajoutés</a></li>
+    <li><a href="#Items">Items</a></li>
+    <li><a href="#Blocs"> Blocs</a></li>
+    <li><a href="#Enchantements">Enchantements</a></li>
+    <li><a href="#Entités">Entités</a></li>
   </ol>
 </details>
 <br>
 
-<h1 id="Items" style="font-size:30px;">Items Ajoutés</h1>
+<h1 id="Items" style="font-size:30px;">Items</h1>
 
 <li id="VJB">VJB : inutile mais fait du bruit</li>
 
 <br>
-<h1 id="Blocs" style="font-size:30px;">Blocs Ajoutés</h1>
+<h1 id="Blocs" style="font-size:30px;">Blocs</h1>
 
 <ul>
 <li>VJBore : Minerai qui peut être fondu et donne un <a href="#VJB">VJB</a></li>
@@ -37,6 +36,9 @@
 <li><strong>Vol de vie</strong> : Rend une partie des degats en pv</li>
 </ul>  
 
+<h1 id="Entités" style="font-size:30px;">Entités</h1>
+
+<li><strong>Entité de dernier recours</strong> : invoquée avec l'enchantement Dernier Recours </li>
 
 <h1 id="Auteurs" style="font-size:30px;"align = "center">Auteurs</h1>
 
