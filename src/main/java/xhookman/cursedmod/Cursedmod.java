@@ -1,22 +1,21 @@
 package xhookman.cursedmod;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import software.bernie.geckolib3.GeckoLib;
 import xhookman.cursedmod.block.VjbBlock;
 import xhookman.cursedmod.block.VjbOre;
+import xhookman.cursedmod.entity.Custom.LastResortEntity;
+import xhookman.cursedmod.entity.ModEntities;
 import xhookman.cursedmod.utils.enchantments.LastResort;
 import xhookman.cursedmod.utils.enchantments.LifeLeech;
 import xhookman.cursedmod.utils.enchantments.PlaySound;
 
-import static net.fabricmc.fabric.impl.transfer.TransferApiImpl.LOGGER;
 import static xhookman.cursedmod.item.CustomItem.VJB;
-import static xhookman.cursedmod.utils.enchantments.LastResort.packetReceiverSummonLastResort;
 
 public class Cursedmod implements ModInitializer {
     public static final String MOD_ID = "cursedmod";
@@ -45,6 +44,9 @@ public class Cursedmod implements ModInitializer {
         // packet
         LastResort.packetReceiverSummonLastResort();
         PlaySound.packetRecieverSound();
+
+        GeckoLib.initialize();
+        FabricDefaultAttributeRegistry.register(ModEntities.LAST_RESORT_ENTITY, LastResortEntity.setAttributes());
 
     }
 

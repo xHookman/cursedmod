@@ -30,18 +30,20 @@ public class LastResort extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return 3;
+        return 2;
     }
 
     @Override
     public void onUserDamaged(LivingEntity user, Entity attacker, int level) {
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeInt(level);
-        buf.retain(); // s'assure que le paquet ne sera pas libéré avant qu'il soit envoyé
-        ClientPlayNetworking.send(new Identifier("summon_last_resort"), buf);
-        buf.release(); // libère le paquet après l'avoir envoyé
-        super.onUserDamaged(user,attacker,level);
-        LOGGER.info(("LastResort"));
+        if(user.getHealth() <= user.getMaxHealth()/2) { // if player midlife or less
+            PacketByteBuf buf = PacketByteBufs.create();
+            buf.writeInt(level);
+            buf.retain(); // s'assure que le paquet ne sera pas libéré avant qu'il soit envoyé
+            ClientPlayNetworking.send(new Identifier("summon_last_resort"), buf);
+            buf.release(); // libère le paquet après l'avoir envoyé
+            super.onUserDamaged(user, attacker, level);
+            LOGGER.info(("LastResort appliqué"));
+        }
     }
     public static void registerLastResort(){
         Registry.register(Registry.ENCHANTMENT,new Identifier(MOD_ID,"last_resort"),new LastResort());
@@ -56,7 +58,7 @@ public class LastResort extends Enchantment {
                 for(int i=niveau; i>0; i--){
                     player.world.playSoundFromEntity(null, player, ENTITY_WOLF_HOWL, SoundCategory.PLAYERS, 1.0F, 1.0F);
                     LOGGER.info("son LastResort joué");
-                    server.getCommandManager().executeWithPrefix(server.getCommandSource().withSilent(),"summon minecraft:wolf "+player.getX()+" "+player.getY()+" "+player.getZ() + " {Owner:"+player.getEntityName()+"}");
+                    server.getCommandManager().executeWithPrefix(server.getCommandSource().withSilent(),"summon "+MOD_ID+":"+"last_resort "+player.getX()+" "+player.getY()+" "+player.getZ() + " {Owner:"+player.getEntityName()+"}");
                     LOGGER.info("entité LastResort invoquée");
                 }
             });

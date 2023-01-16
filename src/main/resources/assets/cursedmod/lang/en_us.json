@@ -8,5 +8,7 @@
 
   "enchantment.cursedmod.musique": "Music",
   "enchantment.cursedmod.life_leech": "Life Leech",
-  "enchantment.cursedmod.last_resort": "Last Resort"
+  "enchantment.cursedmod.last_resort": "Last Resort",
+
+  "entity.cursedmod.last_resort": "Last resort entity"
 }
